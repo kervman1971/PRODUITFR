@@ -22,6 +22,7 @@
   .fr{border:1px solid #cfe3d8;background:#fbfdfc;border-radius:10px;padding:12px} .en{border:1px solid var(--line);border-radius:10px;padding:12px}
   .check{list-style:none;padding:0;margin:0} .check li{padding:5px 0;border-bottom:1px solid #eef1f3} .score{font-size:34px;font-weight:800;color:var(--green)}
   .note{background:var(--amber);border:1px solid #ecd98a;border-radius:10px;padding:12px;font-size:14px} .small{color:var(--muted);font-size:13px}
+  .importbox{border:1px dashed #9db8a9;background:#f4faf6;border-radius:10px;padding:12px;margin:12px 0} .importbox input[type=file]{border:0;padding:0}
 </style>
 </head>
 <body>
@@ -39,6 +40,7 @@
   <div class="grid">
     <aside class="card">
       <h2>Products</h2>
+      <div id="productList">
       <div class="prod active" onclick="loadDemo()">
         <strong>Bath Towel Appliqué</strong><br>
         <span class="pill">Draft ready</span> <span class="small">60,00 $</span>
@@ -51,8 +53,20 @@
         <strong>Embroidered Bib Set</strong><br>
         <span class="pill missing">French missing</span>
       </div>
-      <p class="small">In the real tool this list would come from Shopify. In this preview it is fixed demo data so you can see the layout and workflow.</p>
-      <div class="note"><strong>French completeness for this store:</strong><br><span class="score">1 / 3</span> products fully in French</div>
+      </div>
+      <div class="importbox">
+        <h3 style="margin-top:0">Bulk import a product list</h3>
+        <p class="small">Upload a CSV. Works with a simple list and with a Shopify export. Nothing leaves your browser in this preview.</p>
+        <input type="file" id="csvFile" accept=".csv,text/csv" onchange="importCSVFile(event)">
+        <div class="row">
+          <button class="ghost" onclick="loadSampleCSV()">Load sample CSV</button>
+          <button class="ghost" onclick="downloadTemplate()">Download CSV template</button>
+        </div>
+        <p id="importStatus" class="small">No file imported yet. Accepted columns: Title, Description (or Body HTML), Price (or Variant Price), Material, Size. Rows without a title are skipped, and duplicate titles are skipped.</p>
+      </div>
+      <p class="small">In the real tool this list would come from Shopify. In this preview it starts as fixed demo data, then grows with your CSV import.</p>
+      <div class="note"><strong>French completeness for this store:</strong><br><span class="score" id="completenessScore">1 / 3</span> products fully in French</div>
+      <p id="queueNote" class="small"></p>
     </aside>
 
     <main>
@@ -113,7 +127,7 @@
 
       <div class="card" style="margin-top:16px">
         <h2>What is NOT in this preview</h2>
-        <p class="small">No live Shopify connection, no user accounts, no Stripe billing, and no real AI generation. The French draft above is pre-written demo copy, and “Generate” only rebuilds it from the fields on this page with Quebec price formatting. Those are the parts a no-code build (accounts + Stripe + Shopify API + AI) would add next.</p>
+        <p class="small">CSV bulk import is now in this preview, and it runs entirely in your browser. Still not here: a live Shopify connection, user accounts, Stripe billing, and real AI generation. The French draft is a template rebuild from the fields on this page with Quebec price formatting, not an AI rewrite. Those are the parts a no-code build (accounts + Stripe + Shopify API + AI) would add next.</p>
       </div>
     </main>
   </div>
@@ -133,16 +147,139 @@ function loadDemo(){
   document.getElementById('size').value = '30 x 56 in';
   generate();
 }
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function stripHtml(s){var d=document.createElement('div');d.innerHTML=String(s||'');return (d.textContent||'').trim();}
+function translateTitle(title){
+  var phrases={'personalized christmas stocking':'Bas de Noël personnalisé','custom baby onesie':'Cache-couche personnalisé pour bébé','embroidered hooded towel':'Serviette à capuchon brodée','personalized baby blanket':'Couverture personnalisée pour bébé','embroidered bib set':'Ensemble de bavoirs brodés'};
+  var key = String(title||'').trim().toLowerCase();
+  if(phrases[key]) return phrases[key];
+  var map={bath:'bain',towel:'serviette',baby:'bébé',blanket:'couverture',personalized:'personnalisé',personalised:'personnalisé',embroidered:'brodé',bib:'bavoir',set:'ensemble',gift:'cadeau',christmas:'Noël',stocking:'bas',onesie:'cache-couche',hooded:'à capuchon',custom:'personnalisé',soft:'doux',appliqué:'appliqué',applique:'appliqué',with:'avec',and:'et',for:'pour'};
+  var out=String(title||'').split(/\s+/).map(function(w){var k=w.toLowerCase().replace(/[^a-zàâäéèêëîïôöùûüç'-]/gi,'');return map[k]||w;}).join(' ');
+  return out.charAt(0).toUpperCase()+out.slice(1);
+}
+function translateMaterial(m){
+  return String(m||'').replace(/100%/g,'100 %').replace(/cotton/gi,'coton').replace(/polyester/gi,'polyester').replace(/wool/gi,'laine');
+}
 function generate(){
   var title = document.getElementById('enTitle').value;
   var desc = document.getElementById('enDesc').value;
   var price = qPrice(document.getElementById('price').value);
-  var material = document.getElementById('material').value.replace('100% cotton', '100 % coton').replace('cotton', 'coton');
+  var material = translateMaterial(document.getElementById('material').value);
   var size = document.getElementById('size').value.replace(' in', ' po');
-  document.getElementById('enOut').innerHTML = '<strong>' + title + '</strong><br>' + desc;
-  document.getElementById('frTitle').value = 'Serviette de bain avec appliqué brodé personnalisé';
-  document.getElementById('frDesc').value = 'Serviette de bain douce et absorbante, en ' + material + ', avec un appliqué brodé personnalisé. Un cadeau pratique et personnel pour l’arrivée d’un bébé. Format : ' + size + '. Prix : ' + price + '.';
+  document.getElementById('enOut').innerHTML = '<strong>' + esc(title) + '</strong><br>' + esc(desc);
+  if(title.trim()==='Bath Towel Appliqué'){
+    document.getElementById('frTitle').value = 'Serviette de bain avec appliqué brodé personnalisé';
+    document.getElementById('frDesc').value = 'Serviette de bain douce et absorbante, en ' + material + ', avec un appliqué brodé personnalisé. Un cadeau pratique et personnel pour l’arrivée d’un bébé. Format : ' + size + '. Prix : ' + price + '.';
+  } else {
+    var ft = translateTitle(title);
+    document.getElementById('frTitle').value = ft;
+    var parts = [ft + '.'];
+    if(material) parts.push('En ' + material + '.');
+    if(size) parts.push('Format : ' + size + '.');
+    parts.push('Prix : ' + price + '.');
+    parts.push('Brouillon à réviser : dans la version avec IA, la description anglaise serait réécrite en français québécois, sans inventer de détails.');
+    document.getElementById('frDesc').value = parts.join(' ');
+    document.getElementById('frSeo').value = ft.toLowerCase();
+    document.getElementById('frAlt').value = ft;
+  }
   document.getElementById('status').textContent = 'Status: new draft generated. Edit the French text, then approve. Not published.';
+}
+var importedProducts = [];
+function updateCounts(){
+  var total = document.querySelectorAll('#productList .prod').length;
+  var done = document.querySelectorAll('#productList .pill.done').length;
+  var el = document.getElementById('completenessScore');
+  if(el) el.textContent = done + ' / ' + total;
+  var q = document.getElementById('queueNote');
+  if(q) q.textContent = total > 25 ? 'Bulk note: ' + total + ' products imported, but the $29 base plan generates 25 per month. The rest would wait in queue, starting with French-missing items.' : '';
+}
+function setActiveProd(el){
+  document.querySelectorAll('#productList .prod').forEach(function(p){p.classList.remove('active');});
+  if(el) el.classList.add('active');
+}
+function selectImported(i, el){
+  var p = importedProducts[i];
+  if(!p) return;
+  setActiveProd(el);
+  document.getElementById('enTitle').value = p.title;
+  document.getElementById('enDesc').value = p.description;
+  document.getElementById('price').value = p.price;
+  document.getElementById('material').value = p.material;
+  document.getElementById('size').value = p.size;
+  generate();
+}
+function parseCSV(text){
+  var rows=[], row=[], cur='', inQ=false;
+  text = String(text||'').replace(/^\uFEFF/, '');
+  for(var i=0;i<text.length;i++){
+    var c=text[i];
+    if(inQ){
+      if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else {inQ=false;} }
+      else cur+=c;
+    } else if(c==='"'){ inQ=true; }
+    else if(c===','){ row.push(cur); cur=''; }
+    else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; }
+    else if(c==='\r'){ /* skip, newline handles it */ }
+    else cur+=c;
+  }
+  if(cur!=='' || row.length){ row.push(cur); rows.push(row); }
+  return rows.filter(function(r){return r.some(function(v){return String(v).trim()!=='';});});
+}
+function pick(row, headers, names){
+  for(var i=0;i<names.length;i++){
+    var idx = headers.indexOf(names[i]);
+    if(idx>=0) return String(row[idx]||'').trim();
+  }
+  return '';
+}
+function importCSVText(text){
+  var rows = parseCSV(text);
+  if(rows.length < 2){ document.getElementById('importStatus').textContent = 'That file has no data rows. It needs a header row plus at least one product.'; return; }
+  var headers = rows[0].map(function(h){return String(h||'').trim().toLowerCase();});
+  var seen = new Set();
+  document.querySelectorAll('#productList .prod strong').forEach(function(s){seen.add(s.textContent.trim().toLowerCase());});
+  var added=0, skipped=0;
+  for(var r=1;r<rows.length;r++){
+    var row=rows[r];
+    var title = pick(row, headers, ['title','name','product title','nom']);
+    if(!title){ skipped++; continue; }
+    if(seen.has(title.toLowerCase())){ skipped++; continue; }
+    seen.add(title.toLowerCase());
+    var priceRaw = pick(row, headers, ['variant price','price','prix']);
+    var price = priceRaw.replace(/[^0-9.,-]/g,'').replace(',', '.');
+    var p = {title:title, description:stripHtml(pick(row, headers, ['body (html)','body html','description','body','description anglaise'])), price:price, material:pick(row, headers, ['material','materials','matière','matiere']), size:pick(row, headers, ['size','format'])};
+    importedProducts.push(p);
+    var idx = importedProducts.length-1;
+    var div = document.createElement('div');
+    div.className='prod';
+    div.onclick=(function(i, el){return function(){selectImported(i, el);};})(idx, div);
+    div.innerHTML='<strong>'+esc(p.title)+'</strong><br><span class="pill missing">French missing</span> <span class="small">'+esc(p.price ? qPrice(p.price) : '')+'</span>';
+    document.getElementById('productList').appendChild(div);
+    added++;
+  }
+  document.getElementById('importStatus').textContent = 'Imported ' + added + ' product' + (added===1?'':'s') + (skipped ? ', skipped ' + skipped + ' (no title, duplicate, or Shopify variant row).' : '.') + ' Click an imported product to load it and generate its French draft.';
+  updateCounts();
+  if(added && importedProducts.length) selectImported(importedProducts.length-1, document.querySelectorAll('#productList .prod')[document.querySelectorAll('#productList .prod').length-1]);
+}
+function importCSVFile(event){
+  var f = event.target.files && event.target.files[0];
+  if(!f) return;
+  var reader = new FileReader();
+  reader.onload = function(e){ importCSVText(e.target.result); };
+  reader.readAsText(f);
+}
+function loadSampleCSV(){
+  var sample = 'Title,Description,Price,Material,Size\n"Custom Baby Onesie","Soft baby onesie with embroidered name",38.00,"100% cotton","6 months"\n"Embroidered Hooded Towel","Hooded towel with embroidered animal applique",52.00,"100% cotton","30 x 30 in"\n"Personalized Christmas Stocking","Christmas stocking with embroidered name",34.00,"100% cotton","18 in"';
+  importCSVText(sample);
+}
+function downloadTemplate(){
+  var csv = 'Title,Description,Price,Material,Size\n"Example Product","Example description in English",29.00,"100% cotton","10 x 10 in"\n';
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'produitfr-template.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 function copyFrench(){
   var t = document.getElementById('frTitle').value + '\n\n' + document.getElementById('frDesc').value;
