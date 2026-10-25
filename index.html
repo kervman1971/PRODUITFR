@@ -5,30 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ProduitFR — Preview: French descriptions for Quebec Shopify stores</title>
 <style>
-  :root{--ink:#1d2731;--muted:#5d6b78;--line:#dde3e8;--bg:#f6f7f5;--card:#fff;--green:#1e6b4f;--green2:#e8f2ec;--amber:#fff4d6;--blue:#eef4fb}
-  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.45}
-  header{background:var(--ink);color:#fff;padding:18px 20px} header h1{margin:0;font-size:22px} header p{margin:4px 0 0;color:#cbd5dd}
-  .wrap{max-width:1080px;margin:0 auto;padding:20px} .top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-  .badge{background:var(--green);color:#fff;padding:8px 12px;border-radius:999px;font-weight:700}
-  .grid{display:grid;grid-template-columns:280px 1fr;gap:16px;margin-top:16px} @media(max-width:800px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-  .card h2{margin:0 0 10px;font-size:17px} .card h3{margin:14px 0 6px;font-size:14px}
-  label{display:block;font-size:13px;font-weight:700;margin:10px 0 4px} input,textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font:inherit}
-  textarea{min-height:84px;resize:vertical} button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
-  .primary{background:var(--green);color:#fff} .ghost{background:#eef1f3;color:var(--ink)} .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .prod{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;cursor:pointer} .prod.active{border-color:var(--green);background:var(--green2)}
-  .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--blue)} .pill.done{background:var(--green2);color:var(--green)} .pill.missing{background:#fdecec;color:#9b2c2c}
-  .side{display:grid;grid-template-columns:1fr 1fr;gap:12px} @media(max-width:800px){.side{grid-template-columns:1fr}}
-  .fr{border:1px solid #cfe3d8;background:#fbfdfc;border-radius:10px;padding:12px} .en{border:1px solid var(--line);border-radius:10px;padding:12px}
-  .check{list-style:none;padding:0;margin:0} .check li{padding:5px 0;border-bottom:1px solid #eef1f3} .score{font-size:34px;font-weight:800;color:var(--green)}
-  .note{background:var(--amber);border:1px solid #ecd98a;border-radius:10px;padding:12px;font-size:14px} .small{color:var(--muted);font-size:13px}
-  .importbox{border:1px dashed #9db8a9;background:#f4faf6;border-radius:10px;padding:12px;margin:12px 0} .importbox input[type=file]{border:0;padding:0}
+  :root{--ink:#20241f;--muted:#5a625a;--line:#e3ddd0;--bg:#faf7f0;--card:#ffffff;--green:#17614a;--green2:#e6f0ea;--amber:#fff3d6;--blue:#eaf0f7;--red:#fde8e8;--gold:#8a5a00}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px}
+  header{background:var(--green);color:#fff;padding:30px 20px 26px} header .inner{max-width:1120px;margin:0 auto} header h1{margin:0;font-size:32px;line-height:1.2} header p{margin:10px 0 0;color:#d8e8de;font-size:18px;max-width:760px}
+  .wrap{max-width:1120px;margin:0 auto;padding:24px 20px 40px} .top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+  .badge{background:var(--green);color:#fff;padding:9px 14px;border-radius:999px;font-weight:700;font-size:15px}
+  .hero{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:20px;box-shadow:0 2px 12px rgba(0,0,0,.04)} .hero h2{margin:0 0 6px;font-size:22px} .hero p{margin:0 0 16px;color:var(--muted)}
+  .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px} .step{border-top:4px solid var(--green);padding-top:12px} .step b{display:block;font-size:18px;margin-bottom:4px} .step span{color:var(--muted);font-size:16px}
+  .grid{display:grid;grid-template-columns:320px 1fr;gap:20px;margin-top:20px} @media(max-width:850px){.grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .card h2{margin:0 0 8px;font-size:21px;line-height:1.3} .card h3{margin:18px 0 8px;font-size:16px} .card>p:first-of-type{color:var(--muted)}
+  .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);font-weight:800;margin-bottom:6px}
+  label{display:block;font-size:14px;font-weight:700;margin:16px 0 6px} input,textarea,select{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:16px;background:#fff}
+  textarea{min-height:110px;resize:vertical} #frDesc{min-height:170px} button{border:0;border-radius:10px;padding:13px 18px;font-weight:700;cursor:pointer;font-size:16px}
+  .primary{background:var(--green);color:#fff} .ghost{background:#eef1ec;color:var(--ink)} .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px} @media(max-width:600px){.row button{flex:1 1 100%}}
+  .fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px} @media(max-width:700px){.fields{grid-template-columns:1fr}}
+  .prod{border:1.5px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;cursor:pointer;background:#fff} .prod strong{font-size:17px} .prod.active{border-color:var(--green);background:var(--green2);box-shadow:0 0 0 2px var(--green2)}
+  .pill{display:inline-block;font-size:13px;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--blue)} .pill.done{background:var(--green2);color:var(--green)} .pill.missing{background:var(--red);color:#8b1f1f}
+  .legend{font-size:14px;color:var(--muted);line-height:1.6}
+  .side{display:grid;grid-template-columns:1fr 1fr;gap:16px} @media(max-width:850px){.side{grid-template-columns:1fr}}
+  .fr{border:1.5px solid #bcd6c6;background:#f7fbf8;border-radius:12px;padding:16px} .en{border:1.5px solid var(--line);border-radius:12px;padding:16px;background:#fffdf8}
+  .check{list-style:none;padding:0;margin:0} .check li{padding:9px 0;border-bottom:1px solid #eee;font-size:16px} .score{font-size:36px;font-weight:800;color:var(--green);line-height:1.1}
+  .note{background:var(--amber);border:1px solid #ecd98a;border-radius:12px;padding:16px;font-size:15px} .small{color:var(--muted);font-size:14px;line-height:1.6}
+  .importbox{border:1.5px dashed #8fb5a0;background:#f2f7f2;border-radius:12px;padding:16px;margin:16px 0} .importbox input[type=file]{border:0;padding:0;font-size:15px}
+  .importbtn{background:#fff;border:1.5px solid var(--green);color:var(--green);padding:12px 16px}
+  .bar{height:10px;background:#eee7d8;border-radius:999px;overflow:hidden;margin:10px 0 4px} .bar i{display:block;height:100%;background:var(--green);width:33%}
+  .statusbox{background:var(--green2);border-radius:10px;padding:12px 14px;font-weight:600;font-size:15px}
 </style>
 </head>
 <body>
 <header>
-  <h1>ProduitFR <span style="font-weight:400;font-size:15px">— preview only</span></h1>
-  <p>French product descriptions for Quebec Shopify stores. Quebec French, not France French. Review before anything publishes.</p>
+  <div class="inner">
+    <h1>ProduitFR</h1>
+    <p>French descriptions for your Quebec shop, in Quebec French. Pick a product, check the French draft, approve it. Nothing publishes until you say so.</p>
+    <p style="font-size:15px;color:#cfe5d8">Preview only &middot; Des descriptions françaises pour votre boutique au Québec</p>
+  </div>
 </header>
 
 <div class="wrap">
@@ -37,9 +48,26 @@
     <div class="badge">$29 CAD / month · Base plan · 25 products / month</div>
   </div>
 
+  <section class="hero">
+    <div class="eyebrow">How to read this page</div>
+    <h2>Three steps, in plain language</h2>
+    <p>You do not need to know Shopify or French grammar to follow it. Work through it in order, top to bottom.</p>
+    <div class="steps">
+      <div class="step"><b>1. Pick a product</b><span>Choose from the product list, or import a whole list with a CSV file.</span></div>
+      <div class="step"><b>2. Check the French draft</b><span>English first, French next. Edit the French if anything looks off.</span></div>
+      <div class="step"><b>3. Approve it</b><span>Only an approved draft would go to Shopify in the real tool. In this preview, approval just changes the status.</span></div>
+    </div>
+  </section>
+
   <div class="grid">
     <aside class="card">
+      <div class="eyebrow">Your products</div>
       <h2>Products</h2>
+      <div class="legend">
+        <div><span class="pill missing">French missing</span> &nbsp;needs a French version</div>
+        <div style="margin-top:6px"><span class="pill">Draft ready</span> &nbsp;ready for you to check</div>
+        <div style="margin-top:6px"><span class="pill done">French published</span> &nbsp;done</div>
+      </div>
       <div id="productList">
       <div class="prod active" onclick="loadDemo()">
         <strong>Bath Towel Appliqué</strong><br>
@@ -59,24 +87,26 @@
         <p class="small">Upload a CSV. Works with a simple list and with a Shopify export. Nothing leaves your browser in this preview.</p>
         <input type="file" id="csvFile" accept=".csv,text/csv" onchange="importCSVFile(event)">
         <div class="row">
-          <button class="ghost" onclick="loadSampleCSV()">Load sample CSV</button>
-          <button class="ghost" onclick="downloadTemplate()">Download CSV template</button>
+          <button class="importbtn" onclick="loadSampleCSV()">Load sample CSV</button>
+          <button class="importbtn" onclick="downloadTemplate()">Download CSV template</button>
         </div>
         <p id="importStatus" class="small">No file imported yet. Accepted columns: Title, Description (or Body HTML), Price (or Variant Price), Material, Size. Rows without a title are skipped, and duplicate titles are skipped.</p>
       </div>
       <p class="small">In the real tool this list would come from Shopify. In this preview it starts as fixed demo data, then grows with your CSV import.</p>
-      <div class="note"><strong>French completeness for this store:</strong><br><span class="score" id="completenessScore">1 / 3</span> products fully in French</div>
+      <div class="note"><strong>How much of the store is in French?</strong><br><span class="score" id="completenessScore">1 / 3</span> products fully in French<div class="bar"><i id="completenessBar"></i></div><span class="small">The bar fills as more products get a French version.</span></div>
       <p id="queueNote" class="small"></p>
     </aside>
 
     <main>
       <div class="card">
-        <h2>1. English source (from Shopify)</h2>
+        <div class="eyebrow">Step 1 &middot; The original</div>
+        <h2>English product, as it is in the store</h2>
+        <p>This is the starting point. Change it here and the French draft updates when you generate again.</p>
         <label for="enTitle">Product title</label>
         <input id="enTitle" value="Bath Towel Appliqué">
         <label for="enDesc">English description</label>
         <textarea id="enDesc">Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.</textarea>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div class="fields">
           <div><label for="price">Price (CAD)</label><input id="price" value="60.00"></div>
           <div><label for="material">Material</label><input id="material" value="100% cotton"></div>
           <div><label for="size">Size</label><input id="size" value="30 x 56 in"></div>
@@ -88,13 +118,15 @@
         <p class="small">Rule in this preview and in the real tool: facts (price, material, size) come from the store. The tool writes selling copy around them, it does not invent facts.</p>
       </div>
 
-      <div class="card" style="margin-top:16px">
-        <h2>2. Review the French draft</h2>
+      <div class="card" style="margin-top:20px">
+        <div class="eyebrow">Step 2 &middot; Check it</div>
+        <h2>Review the French draft</h2>
+        <p>Read the French on the right. If a word or detail is wrong, fix it in the French box before approving.</p>
         <div class="side">
           <div class="en">
             <h3>English</h3>
             <p id="enOut"><strong>Bath Towel Appliqué</strong><br>Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.</p>
-            <p class="small">Price: $60.00</p>
+            <p class="small" id="enPrice">Price: $60.00</p>
           </div>
           <div class="fr">
             <h3>Français (Québec)</h3>
@@ -112,21 +144,22 @@
           <button class="primary" onclick="copyFrench()">Copy French draft</button>
           <button class="ghost" onclick="approve()">✓ Approve — ready to publish</button>
         </div>
-        <p id="status" class="small">Status: draft, not published. In the real tool, approval would be required before Shopify is updated.</p>
+        <p id="status" class="statusbox">Status: draft, not published. In the real tool, approval would be required before Shopify is updated.</p>
 
-        <h3>French completeness check</h3>
+        <h3>Did we cover everything in French?</h3>
         <ul class="check">
           <li>✓ French title present</li>
           <li>✓ French description present</li>
-          <li>✓ Quebec price format: 60,00 $</li>
+          <li id="priceCheck">✓ Quebec price format: 60,00 $</li>
           <li>✓ French image alt text present</li>
           <li>○ French SEO title and meta description to confirm</li>
         </ul>
         <p class="small"><strong>Agent-readiness note:</strong> this is the gap your Analyzer already flags. English-only = French shoppers and French-language AI agents can miss it. A complete French version closes that gap for this product.</p>
       </div>
 
-      <div class="card" style="margin-top:16px">
-        <h2>What is NOT in this preview</h2>
+      <div class="card" style="margin-top:20px">
+        <div class="eyebrow">Honest limits</div>
+        <h2>What this preview does not do yet</h2>
         <p class="small">CSV bulk import is now in this preview, and it runs entirely in your browser. Still not here: a live Shopify connection, user accounts, Stripe billing, and real AI generation. The French draft is a template rebuild from the fields on this page with Quebec price formatting, not an AI rewrite. Those are the parts a no-code build (accounts + Stripe + Shopify API + AI) would add next.</p>
       </div>
     </main>
@@ -167,6 +200,11 @@ function generate(){
   var material = translateMaterial(document.getElementById('material').value);
   var size = document.getElementById('size').value.replace(' in', ' po');
   document.getElementById('enOut').innerHTML = '<strong>' + esc(title) + '</strong><br>' + esc(desc);
+  var rawPrice = parseFloat(String(document.getElementById('price').value).replace(',', '.'));
+  var enPriceEl = document.getElementById('enPrice');
+  if(enPriceEl) enPriceEl.textContent = 'Price: $' + (isNaN(rawPrice) ? document.getElementById('price').value : rawPrice.toFixed(2));
+  var priceCheckEl = document.getElementById('priceCheck');
+  if(priceCheckEl) priceCheckEl.textContent = '✓ Quebec price format: ' + price;
   if(title.trim()==='Bath Towel Appliqué'){
     document.getElementById('frTitle').value = 'Serviette de bain avec appliqué brodé personnalisé';
     document.getElementById('frDesc').value = 'Serviette de bain douce et absorbante, en ' + material + ', avec un appliqué brodé personnalisé. Un cadeau pratique et personnel pour l’arrivée d’un bébé. Format : ' + size + '. Prix : ' + price + '.';
@@ -190,6 +228,8 @@ function updateCounts(){
   var done = document.querySelectorAll('#productList .pill.done').length;
   var el = document.getElementById('completenessScore');
   if(el) el.textContent = done + ' / ' + total;
+  var bar = document.getElementById('completenessBar');
+  if(bar) bar.style.width = total ? Math.round(done/total*100) + '%' : '0%';
   var q = document.getElementById('queueNote');
   if(q) q.textContent = total > 25 ? 'Bulk note: ' + total + ' products imported, but the $29 base plan generates 25 per month. The rest would wait in queue, starting with French-missing items.' : '';
 }
