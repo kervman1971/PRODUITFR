@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProduitFR — Preview: French descriptions for Quebec Shopify stores</title>
+<style>
+  :root{--ink:#1d2731;--muted:#5d6b78;--line:#dde3e8;--bg:#f6f7f5;--card:#fff;--green:#1e6b4f;--green2:#e8f2ec;--amber:#fff4d6;--blue:#eef4fb}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.45}
+  header{background:var(--ink);color:#fff;padding:18px 20px} header h1{margin:0;font-size:22px} header p{margin:4px 0 0;color:#cbd5dd}
+  .wrap{max-width:1080px;margin:0 auto;padding:20px} .top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .badge{background:var(--green);color:#fff;padding:8px 12px;border-radius:999px;font-weight:700}
+  .grid{display:grid;grid-template-columns:280px 1fr;gap:16px;margin-top:16px} @media(max-width:800px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .card h2{margin:0 0 10px;font-size:17px} .card h3{margin:14px 0 6px;font-size:14px}
+  label{display:block;font-size:13px;font-weight:700;margin:10px 0 4px} input,textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font:inherit}
+  textarea{min-height:84px;resize:vertical} button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
+  .primary{background:var(--green);color:#fff} .ghost{background:#eef1f3;color:var(--ink)} .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .prod{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;cursor:pointer} .prod.active{border-color:var(--green);background:var(--green2)}
+  .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--blue)} .pill.done{background:var(--green2);color:var(--green)} .pill.missing{background:#fdecec;color:#9b2c2c}
+  .side{display:grid;grid-template-columns:1fr 1fr;gap:12px} @media(max-width:800px){.side{grid-template-columns:1fr}}
+  .fr{border:1px solid #cfe3d8;background:#fbfdfc;border-radius:10px;padding:12px} .en{border:1px solid var(--line);border-radius:10px;padding:12px}
+  .check{list-style:none;padding:0;margin:0} .check li{padding:5px 0;border-bottom:1px solid #eef1f3} .score{font-size:34px;font-weight:800;color:var(--green)}
+  .note{background:var(--amber);border:1px solid #ecd98a;border-radius:10px;padding:12px;font-size:14px} .small{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>ProduitFR <span style="font-weight:400;font-size:15px">— preview only</span></h1>
+  <p>French product descriptions for Quebec Shopify stores. Quebec French, not France French. Review before anything publishes.</p>
+</header>
+
+<div class="wrap">
+  <div class="top">
+    <div><strong>Demo store:</strong> A-Z Créations <span class="small">(demo data, not a live Shopify connection)</span></div>
+    <div class="badge">$29 CAD / month · Base plan · 25 products / month</div>
+  </div>
+
+  <div class="grid">
+    <aside class="card">
+      <h2>Products</h2>
+      <div class="prod active" onclick="loadDemo()">
+        <strong>Bath Towel Appliqué</strong><br>
+        <span class="pill">Draft ready</span> <span class="small">60,00 $</span>
+      </div>
+      <div class="prod">
+        <strong>Personalized Baby Blanket</strong><br>
+        <span class="pill done">French published</span>
+      </div>
+      <div class="prod">
+        <strong>Embroidered Bib Set</strong><br>
+        <span class="pill missing">French missing</span>
+      </div>
+      <p class="small">In the real tool this list would come from Shopify. In this preview it is fixed demo data so you can see the layout and workflow.</p>
+      <div class="note"><strong>French completeness for this store:</strong><br><span class="score">1 / 3</span> products fully in French</div>
+    </aside>
+
+    <main>
+      <div class="card">
+        <h2>1. English source (from Shopify)</h2>
+        <label for="enTitle">Product title</label>
+        <input id="enTitle" value="Bath Towel Appliqué">
+        <label for="enDesc">English description</label>
+        <textarea id="enDesc">Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.</textarea>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div><label for="price">Price (CAD)</label><input id="price" value="60.00"></div>
+          <div><label for="material">Material</label><input id="material" value="100% cotton"></div>
+          <div><label for="size">Size</label><input id="size" value="30 x 56 in"></div>
+        </div>
+        <div class="row">
+          <button class="primary" onclick="generate()">Generate French draft</button>
+          <button class="ghost" onclick="loadDemo()">Reset demo</button>
+        </div>
+        <p class="small">Rule in this preview and in the real tool: facts (price, material, size) come from the store. The tool writes selling copy around them, it does not invent facts.</p>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>2. Review the French draft</h2>
+        <div class="side">
+          <div class="en">
+            <h3>English</h3>
+            <p id="enOut"><strong>Bath Towel Appliqué</strong><br>Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.</p>
+            <p class="small">Price: $60.00</p>
+          </div>
+          <div class="fr">
+            <h3>Français (Québec)</h3>
+            <label for="frTitle">Titre français</label>
+            <input id="frTitle" value="Serviette de bain avec appliqué brodé personnalisé">
+            <label for="frDesc">Description française</label>
+            <textarea id="frDesc" rows="6">Serviette de bain douce et absorbante, en 100 % coton, avec un appliqué brodé personnalisé. Un cadeau pratique et personnel pour l’arrivée d’un bébé. Format : 30 x 56 po. Prix : 60,00 $.</textarea>
+            <label for="frSeo">Mots-clés recherchés au Québec</label>
+            <input id="frSeo" value="serviette de bain personnalisée, cadeau de naissance, serviette brodée bébé">
+            <label for="frAlt">Texte alt de l’image</label>
+            <input id="frAlt" value="Serviette de bain blanche avec appliqué brodé personnalisé">
+          </div>
+        </div>
+        <div class="row">
+          <button class="primary" onclick="copyFrench()">Copy French draft</button>
+          <button class="ghost" onclick="approve()">✓ Approve — ready to publish</button>
+        </div>
+        <p id="status" class="small">Status: draft, not published. In the real tool, approval would be required before Shopify is updated.</p>
+
+        <h3>French completeness check</h3>
+        <ul class="check">
+          <li>✓ French title present</li>
+          <li>✓ French description present</li>
+          <li>✓ Quebec price format: 60,00 $</li>
+          <li>✓ French image alt text present</li>
+          <li>○ French SEO title and meta description to confirm</li>
+        </ul>
+        <p class="small"><strong>Agent-readiness note:</strong> this is the gap your Analyzer already flags. English-only = French shoppers and French-language AI agents can miss it. A complete French version closes that gap for this product.</p>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>What is NOT in this preview</h2>
+        <p class="small">No live Shopify connection, no user accounts, no Stripe billing, and no real AI generation. The French draft above is pre-written demo copy, and “Generate” only rebuilds it from the fields on this page with Quebec price formatting. Those are the parts a no-code build (accounts + Stripe + Shopify API + AI) would add next.</p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+function qPrice(v){
+  var n = parseFloat(String(v).replace(',', '.'));
+  if (isNaN(n)) return v;
+  return n.toFixed(2).replace('.', ',') + ' $';
+}
+function loadDemo(){
+  document.getElementById('enTitle').value = 'Bath Towel Appliqué';
+  document.getElementById('enDesc').value = 'Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.';
+  document.getElementById('price').value = '60.00';
+  document.getElementById('material').value = '100% cotton';
+  document.getElementById('size').value = '30 x 56 in';
+  generate();
+}
+function generate(){
+  var title = document.getElementById('enTitle').value;
+  var desc = document.getElementById('enDesc').value;
+  var price = qPrice(document.getElementById('price').value);
+  var material = document.getElementById('material').value.replace('100% cotton', '100 % coton').replace('cotton', 'coton');
+  var size = document.getElementById('size').value.replace(' in', ' po');
+  document.getElementById('enOut').innerHTML = '<strong>' + title + '</strong><br>' + desc;
+  document.getElementById('frTitle').value = 'Serviette de bain avec appliqué brodé personnalisé';
+  document.getElementById('frDesc').value = 'Serviette de bain douce et absorbante, en ' + material + ', avec un appliqué brodé personnalisé. Un cadeau pratique et personnel pour l’arrivée d’un bébé. Format : ' + size + '. Prix : ' + price + '.';
+  document.getElementById('status').textContent = 'Status: new draft generated. Edit the French text, then approve. Not published.';
+}
+function copyFrench(){
+  var t = document.getElementById('frTitle').value + '\n\n' + document.getElementById('frDesc').value;
+  navigator.clipboard.writeText(t).then(function(){
+    document.getElementById('status').textContent = 'Status: French draft copied. You can paste it into Shopify in this preview version.';
+  });
+}
+function approve(){
+  document.getElementById('status').textContent = 'Status: approved — ready to publish. In the real tool this would update the French version in Shopify.';
+}
+</script>
+</body>
+</html>
