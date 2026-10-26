@@ -7,13 +7,16 @@
 <style>
   :root{--ink:#20241f;--muted:#5a625a;--line:#e3ddd0;--bg:#faf7f0;--card:#ffffff;--green:#17614a;--green2:#e6f0ea;--amber:#fff3d6;--blue:#eaf0f7;--red:#fde8e8;--gold:#8a5a00}
   *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px}
-  header{background:var(--green);color:#fff;padding:30px 20px 26px} header .inner{max-width:1120px;margin:0 auto} header h1{margin:0;font-size:32px;line-height:1.2} header p{margin:10px 0 0;color:#d8e8de;font-size:18px;max-width:760px}
+  header{background:linear-gradient(135deg,#124d3a,#1f7a5c);color:#fff;padding:34px 20px 30px;box-shadow:0 4px 20px rgba(18,77,58,.25)} header .inner{max-width:1120px;margin:0 auto} header h1{margin:0;font-size:36px;line-height:1.15;font-family:Georgia,'Times New Roman',serif;letter-spacing:.2px} header p{margin:10px 0 0;color:#d8e8de;font-size:18px;max-width:760px}
+  h2{font-family:Georgia,'Times New Roman',serif;letter-spacing:.2px}
   .wrap{max-width:1120px;margin:0 auto;padding:24px 20px 40px} .top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
   .badge{background:var(--green);color:#fff;padding:9px 14px;border-radius:999px;font-weight:700;font-size:15px}
   .hero{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:20px;box-shadow:0 2px 12px rgba(0,0,0,.04)} .hero h2{margin:0 0 6px;font-size:22px} .hero p{margin:0 0 16px;color:var(--muted)}
   .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px} .step{border-top:4px solid var(--green);padding-top:12px} .step b{display:block;font-size:18px;margin-bottom:4px} .step span{color:var(--muted);font-size:16px}
   .grid{display:grid;grid-template-columns:320px 1fr;gap:20px;margin-top:20px} @media(max-width:850px){.grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 4px 18px rgba(32,36,31,.06)}
+  .prod:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.06)} button:hover{filter:brightness(1.06)} input:focus,textarea:focus,select:focus{outline:2px solid #9cc7b3;border-color:var(--green)}
+  pre.schema{background:#16211c;color:#e8f2ec;border-radius:12px;padding:16px;overflow:auto;font-size:13.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
   .card h2{margin:0 0 8px;font-size:21px;line-height:1.3} .card h3{margin:18px 0 8px;font-size:16px} .card>p:first-of-type{color:var(--muted)}
   .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);font-weight:800;margin-bottom:6px}
   label{display:block;font-size:14px;font-weight:700;margin:16px 0 6px} input,textarea,select{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:16px;background:#fff}
@@ -37,30 +40,41 @@
 <header>
   <div class="inner">
     <h1>ProduitFR</h1>
-    <p>French descriptions for your Quebec shop, in Quebec French. Pick a product, check the French draft, approve it. Nothing publishes until you say so.</p>
+    <p>French descriptions for your Quebec shop, in Quebec French. Import your products, check the French draft and the product data agents read, then approve. Nothing publishes until you say so.</p>
     <p style="font-size:15px;color:#cfe5d8">Preview only &middot; Des descriptions françaises pour votre boutique au Québec</p>
   </div>
 </header>
 
 <div class="wrap">
   <div class="top">
-    <div><strong>Demo store:</strong> A-Z Créations <span class="small">(demo data, not a live Shopify connection)</span></div>
+    <div><strong>Your store:</strong> import your product list to begin <span class="small">(no sample products, no live Shopify connection in this preview)</span></div>
     <div class="badge">$29 CAD / month · Base plan · 25 products / month</div>
   </div>
 
   <section class="hero">
-    <div class="eyebrow">How to read this page</div>
+    <div class="eyebrow">How to use this page</div>
     <h2>Three steps, in plain language</h2>
     <p>You do not need to know Shopify or French grammar to follow it. Work through it in order, top to bottom.</p>
     <div class="steps">
-      <div class="step"><b>1. Pick a product</b><span>Choose from the product list, or import a whole list with a CSV file.</span></div>
+      <div class="step"><b>1. Import your products</b><span>Upload a CSV from Shopify, or use the template. Your list appears on the left.</span></div>
       <div class="step"><b>2. Check the French draft</b><span>English first, French next. Edit the French if anything looks off.</span></div>
-      <div class="step"><b>3. Approve it</b><span>Only an approved draft would go to Shopify in the real tool. In this preview, approval just changes the status.</span></div>
+      <div class="step"><b>3. Check the product data</b><span>Brand, SKU, price, and availability are what shopping agents read. Fix them, then approve.</span></div>
     </div>
   </section>
 
   <div class="grid">
     <aside class="card">
+      <div class="eyebrow">Start here</div>
+      <h2>Import your products</h2>
+      <div class="importbox">
+        <h3 style="margin-top:0">Upload a CSV product list</h3>
+        <p class="small">Upload a CSV from Shopify, or start from the template. Nothing leaves your browser in this preview.</p>
+        <input type="file" id="csvFile" accept=".csv,text/csv" onchange="importCSVFile(event)">
+        <div class="row">
+          <button class="importbtn" onclick="downloadTemplate()">Download CSV template</button>
+        </div>
+        <p id="importStatus" class="small">No products imported yet. Accepted columns include: Title, Body (HTML), Vendor, Type, Product Category, Tags, Variant SKU, Variant Barcode, Variant Price, Variant Compare At Price, Variant Grams, Variant Inventory Qty, Image Src, Image Alt Text, SEO Title, SEO Description, plus Material and Size. Rows without a title are skipped, and duplicate titles are skipped.</p>
+      </div>
       <div class="eyebrow">Your products</div>
       <h2>Products</h2>
       <div class="legend">
@@ -69,31 +83,9 @@
         <div style="margin-top:6px"><span class="pill done">French published</span> &nbsp;done</div>
       </div>
       <div id="productList">
-      <div class="prod active" onclick="loadDemo()">
-        <strong>Bath Towel Appliqué</strong><br>
-        <span class="pill">Draft ready</span> <span class="small">60,00 $</span>
+        <p id="emptyState" class="small">No products yet. Import a CSV file above, and your products will appear here. Click one to load it into the editor.</p>
       </div>
-      <div class="prod">
-        <strong>Personalized Baby Blanket</strong><br>
-        <span class="pill done">French published</span>
-      </div>
-      <div class="prod">
-        <strong>Embroidered Bib Set</strong><br>
-        <span class="pill missing">French missing</span>
-      </div>
-      </div>
-      <div class="importbox">
-        <h3 style="margin-top:0">Bulk import a product list</h3>
-        <p class="small">Upload a CSV. Works with a simple list and with a Shopify export. Nothing leaves your browser in this preview.</p>
-        <input type="file" id="csvFile" accept=".csv,text/csv" onchange="importCSVFile(event)">
-        <div class="row">
-          <button class="importbtn" onclick="loadSampleCSV()">Load sample CSV</button>
-          <button class="importbtn" onclick="downloadTemplate()">Download CSV template</button>
-        </div>
-        <p id="importStatus" class="small">No file imported yet. Accepted columns: Title, Description (or Body HTML), Price (or Variant Price), Material, Size. Rows without a title are skipped, and duplicate titles are skipped.</p>
-      </div>
-      <p class="small">In the real tool this list would come from Shopify. In this preview it starts as fixed demo data, then grows with your CSV import.</p>
-      <div class="note"><strong>How much of the store is in French?</strong><br><span class="score" id="completenessScore">1 / 3</span> products fully in French<div class="bar"><i id="completenessBar"></i></div><span class="small">The bar fills as more products get a French version.</span></div>
+      <div class="note"><strong>How much of the store is in French?</strong><br><span class="score" id="completenessScore">0 / 0</span> products fully in French<div class="bar"><i id="completenessBar" style="width:0%"></i></div><span class="small">The bar fills as more products get a French version.</span></div>
       <p id="queueNote" class="small"></p>
     </aside>
 
@@ -103,17 +95,17 @@
         <h2>English product, as it is in the store</h2>
         <p>This is the starting point. Change it here and the French draft updates when you generate again.</p>
         <label for="enTitle">Product title</label>
-        <input id="enTitle" value="Bath Towel Appliqué">
+        <input id="enTitle" placeholder="Import a product, or type a title here">
         <label for="enDesc">English description</label>
-        <textarea id="enDesc">Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.</textarea>
+        <textarea id="enDesc" placeholder="Import a product, or type the English description here"></textarea>
         <div class="fields">
-          <div><label for="price">Price (CAD)</label><input id="price" value="60.00"></div>
-          <div><label for="material">Material</label><input id="material" value="100% cotton"></div>
-          <div><label for="size">Size</label><input id="size" value="30 x 56 in"></div>
+          <div><label for="price">Price (CAD)</label><input id="price" placeholder="0.00"></div>
+          <div><label for="material">Material</label><input id="material" placeholder="e.g. 100% cotton"></div>
+          <div><label for="size">Size</label><input id="size" placeholder="e.g. 30 x 56 in"></div>
         </div>
         <div class="row">
           <button class="primary" onclick="generate()">Generate French draft</button>
-          <button class="ghost" onclick="loadDemo()">Reset demo</button>
+          <button class="ghost" onclick="clearFields()">Clear fields</button>
         </div>
         <p class="small">Rule in this preview and in the real tool: facts (price, material, size) come from the store. The tool writes selling copy around them, it does not invent facts.</p>
       </div>
@@ -125,42 +117,83 @@
         <div class="side">
           <div class="en">
             <h3>English</h3>
-            <p id="enOut"><strong>Bath Towel Appliqué</strong><br>Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.</p>
-            <p class="small" id="enPrice">Price: $60.00</p>
+            <p id="enOut" class="small">Import a product to see its English version here.</p>
+            <p class="small" id="enPrice"></p>
           </div>
           <div class="fr">
             <h3>Français (Québec)</h3>
             <label for="frTitle">Titre français</label>
-            <input id="frTitle" value="Serviette de bain avec appliqué brodé personnalisé">
+            <input id="frTitle" placeholder="French title will appear after you generate">
             <label for="frDesc">Description française</label>
-            <textarea id="frDesc" rows="6">Serviette de bain douce et absorbante, en 100 % coton, avec un appliqué brodé personnalisé. Un cadeau pratique et personnel pour l’arrivée d’un bébé. Format : 30 x 56 po. Prix : 60,00 $.</textarea>
+            <textarea id="frDesc" rows="6" placeholder="French description will appear after you generate"></textarea>
             <label for="frSeo">Mots-clés recherchés au Québec</label>
-            <input id="frSeo" value="serviette de bain personnalisée, cadeau de naissance, serviette brodée bébé">
+            <input id="frSeo" placeholder="e.g. serviette de bain personnalisée, cadeau de naissance">
             <label for="frAlt">Texte alt de l’image</label>
-            <input id="frAlt" value="Serviette de bain blanche avec appliqué brodé personnalisé">
+            <input id="frAlt" placeholder="French image description, for search and accessibility">
           </div>
         </div>
         <div class="row">
           <button class="primary" onclick="copyFrench()">Copy French draft</button>
           <button class="ghost" onclick="approve()">✓ Approve — ready to publish</button>
         </div>
-        <p id="status" class="statusbox">Status: draft, not published. In the real tool, approval would be required before Shopify is updated.</p>
+        <p id="status" class="statusbox">Status: no product loaded yet. Import a CSV file to begin.</p>
 
         <h3>Did we cover everything in French?</h3>
         <ul class="check">
           <li>✓ French title present</li>
           <li>✓ French description present</li>
-          <li id="priceCheck">✓ Quebec price format: 60,00 $</li>
-          <li>✓ French image alt text present</li>
-          <li>○ French SEO title and meta description to confirm</li>
+          <li id="priceCheck">✓ Quebec price format: —</li>
+          <li id="altCheck">○ French image alt text to generate</li>
+          <li>○ French SEO title and description still to translate</li>
         </ul>
         <p class="small"><strong>Agent-readiness note:</strong> this is the gap your Analyzer already flags. English-only = French shoppers and French-language AI agents can miss it. A complete French version closes that gap for this product.</p>
       </div>
 
       <div class="card" style="margin-top:20px">
+        <div class="eyebrow">Step 3 &middot; The data agents read</div>
+        <h2>Product data (schema)</h2>
+        <p>This is the structured data behind the page, the part shopping agents actually read first. Edit it here. It updates live below, and it comes from your CSV when those columns are present. Reviews and ratings are not in a normal Shopify export, so they are left out here rather than invented.</p>
+        <div class="fields">
+          <div><label for="schBrand">Brand / Vendor</label><input id="schBrand" class="schema-field" oninput="updateSchemaPreview()"></div>
+          <div><label for="schSku">SKU</label><input id="schSku" class="schema-field" oninput="updateSchemaPreview()"></div>
+          <div><label for="schBarcode">Barcode / GTIN</label><input id="schBarcode" class="schema-field" oninput="updateSchemaPreview()"></div>
+        </div>
+        <div class="fields">
+          <div><label for="schType">Product type</label><input id="schType" class="schema-field" oninput="updateSchemaPreview()"></div>
+          <div><label for="schCategory">Category</label><input id="schCategory" class="schema-field" oninput="updateSchemaPreview()"></div>
+          <div><label for="schVariant">Variant / Option</label><input id="schVariant" class="schema-field" oninput="updateSchemaPreview()"></div>
+        </div>
+        <div class="fields">
+          <div><label for="schCompare">Compare-at price (CAD)</label><input id="schCompare" class="schema-field" oninput="updateSchemaPreview()"></div>
+          <div><label for="schWeight">Weight (grams)</label><input id="schWeight" class="schema-field" oninput="updateSchemaPreview()"></div>
+          <div><label for="schInventory">Inventory quantity</label><input id="schInventory" class="schema-field" oninput="updateSchemaPreview()"></div>
+        </div>
+        <label for="schTags">Tags (comma-separated)</label>
+        <input id="schTags" class="schema-field" oninput="updateSchemaPreview()" placeholder="e.g. baby, gift, personalized">
+        <label for="schImage">Image URL</label>
+        <input id="schImage" class="schema-field" oninput="updateSchemaPreview()" placeholder="From your CSV: Image Src">
+        <label for="schSeoTitle">SEO title</label>
+        <input id="schSeoTitle" class="schema-field" oninput="updateSchemaPreview()">
+        <label for="schSeoDesc">SEO description</label>
+        <textarea id="schSeoDesc" class="schema-field" oninput="updateSchemaPreview()"></textarea>
+        <label for="schAvail">Availability</label>
+        <select id="schAvail" class="schema-field" onchange="updateSchemaPreview()">
+          <option value="InStock">In stock</option>
+          <option value="OutOfStock">Out of stock</option>
+          <option value="PreOrder">Pre-order</option>
+        </select>
+        <h3>JSON-LD preview — what an agent would read</h3>
+        <pre class="schema" id="schemaPreview">Import a product to see its product schema here.</pre>
+        <div class="row">
+          <button class="primary" onclick="copySchema()">Copy schema (JSON-LD)</button>
+        </div>
+        <p class="small">In the real tool, this schema would be written back to Shopify with the French version, so the French page and its structured data match.</p>
+      </div>
+
+      <div class="card" style="margin-top:20px">
         <div class="eyebrow">Honest limits</div>
         <h2>What this preview does not do yet</h2>
-        <p class="small">CSV bulk import is now in this preview, and it runs entirely in your browser. Still not here: a live Shopify connection, user accounts, Stripe billing, and real AI generation. The French draft is a template rebuild from the fields on this page with Quebec price formatting, not an AI rewrite. Those are the parts a no-code build (accounts + Stripe + Shopify API + AI) would add next.</p>
+        <p class="small">CSV bulk import and editable product schema are now in this preview, and they run entirely in your browser. Still not here: a live Shopify connection, user accounts, Stripe billing, and real AI generation. The French draft is a template rebuild from the fields on this page with Quebec price formatting, not an AI rewrite. Those are the parts a no-code build (accounts + Stripe + Shopify API + AI) would add next.</p>
       </div>
     </main>
   </div>
@@ -172,13 +205,13 @@ function qPrice(v){
   if (isNaN(n)) return v;
   return n.toFixed(2).replace('.', ',') + ' $';
 }
-function loadDemo(){
-  document.getElementById('enTitle').value = 'Bath Towel Appliqué';
-  document.getElementById('enDesc').value = 'Soft, absorbent bath towel with a personalized embroidered appliqué. A practical, personal gift for a new baby.';
-  document.getElementById('price').value = '60.00';
-  document.getElementById('material').value = '100% cotton';
-  document.getElementById('size').value = '30 x 56 in';
-  generate();
+function clearFields(){
+  ['enTitle','enDesc','price','material','size','frTitle','frDesc','frSeo','frAlt','schBrand','schSku','schBarcode','schType','schCategory','schVariant','schCompare','schWeight','schInventory','schTags','schImage','schSeoTitle','schSeoDesc'].forEach(function(id){var el=document.getElementById(id); if(el) el.value='';});
+  document.getElementById('schAvail').value='InStock';
+  document.getElementById('enOut').textContent='Import a product to see its English version here.';
+  document.getElementById('enPrice').textContent='';
+  document.getElementById('schemaPreview').textContent='Import a product to see its product schema here.';
+  document.getElementById('status').textContent='Status: fields cleared. Import a CSV file to begin.';
 }
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function stripHtml(s){var d=document.createElement('div');d.innerHTML=String(s||'');return (d.textContent||'').trim();}
@@ -195,6 +228,7 @@ function translateMaterial(m){
 }
 function generate(){
   var title = document.getElementById('enTitle').value;
+  if(!title.trim()){ document.getElementById('status').textContent='Status: import a product, or type a product title first.'; return; }
   var desc = document.getElementById('enDesc').value;
   var price = qPrice(document.getElementById('price').value);
   var material = translateMaterial(document.getElementById('material').value);
@@ -205,10 +239,7 @@ function generate(){
   if(enPriceEl) enPriceEl.textContent = 'Price: $' + (isNaN(rawPrice) ? document.getElementById('price').value : rawPrice.toFixed(2));
   var priceCheckEl = document.getElementById('priceCheck');
   if(priceCheckEl) priceCheckEl.textContent = '✓ Quebec price format: ' + price;
-  if(title.trim()==='Bath Towel Appliqué'){
-    document.getElementById('frTitle').value = 'Serviette de bain avec appliqué brodé personnalisé';
-    document.getElementById('frDesc').value = 'Serviette de bain douce et absorbante, en ' + material + ', avec un appliqué brodé personnalisé. Un cadeau pratique et personnel pour l’arrivée d’un bébé. Format : ' + size + '. Prix : ' + price + '.';
-  } else {
+  {
     var ft = translateTitle(title);
     document.getElementById('frTitle').value = ft;
     var parts = [ft + '.'];
@@ -221,6 +252,32 @@ function generate(){
     document.getElementById('frAlt').value = ft;
   }
   document.getElementById('status').textContent = 'Status: new draft generated. Edit the French text, then approve. Not published.';
+  var altEl = document.getElementById('altCheck');
+  if(altEl) altEl.textContent = '✓ French image alt text present';
+  setCurrentBadge('Draft ready', '');
+  updateSchemaPreview();
+}
+function updateSchemaPreview(){
+  var name = document.getElementById('frTitle').value || document.getElementById('enTitle').value;
+  if(!name){ document.getElementById('schemaPreview').textContent='Import a product to see its product schema here.'; return; }
+  var priceRaw = parseFloat(String(document.getElementById('price').value).replace(',', '.'));
+  var schema = {"@context":"https://schema.org","@type":"Product","name":name,"description":document.getElementById('frDesc').value || document.getElementById('enDesc').value,"brand":{"@type":"Brand","name":document.getElementById('schBrand').value},"sku":document.getElementById('schSku').value,"gtin":document.getElementById('schBarcode').value,"category":document.getElementById('schCategory').value,"additionalProperty":[{"@type":"PropertyValue","name":"Product type","value":document.getElementById('schType').value},{"@type":"PropertyValue","name":"Variant","value":document.getElementById('schVariant').value},{"@type":"PropertyValue","name":"Material","value":document.getElementById('material').value},{"@type":"PropertyValue","name":"Size","value":document.getElementById('size').value}],"offers":{"@type":"Offer","price":isNaN(priceRaw)?'':priceRaw.toFixed(2),"priceCurrency":"CAD","availability":"https://schema.org/"+document.getElementById('schAvail').value}};
+  var img = document.getElementById('schImage').value;
+  if(img) schema.image = img;
+  var tags = document.getElementById('schTags').value.split(',').map(function(t){return t.trim();}).filter(Boolean);
+  if(tags.length) schema.keywords = tags.join(', ');
+  var compare = parseFloat(String(document.getElementById('schCompare').value).replace(',', '.'));
+  if(!isNaN(compare)) schema.additionalProperty.push({"@type":"PropertyValue","name":"Compare-at price (CAD)","value":compare.toFixed(2)});
+  // Remove empty fields so agents do not read blank values as facts.
+  Object.keys(schema).forEach(function(k){ if(schema[k]==='' || schema[k]==null) delete schema[k]; });
+  if(schema.brand && !schema.brand.name) delete schema.brand;
+  schema.additionalProperty = schema.additionalProperty.filter(function(p){return p.value;});
+  if(!schema.additionalProperty.length) delete schema.additionalProperty;
+  document.getElementById('schemaPreview').textContent = JSON.stringify(schema, null, 2);
+}
+function copySchema(){
+  var t = document.getElementById('schemaPreview').textContent;
+  navigator.clipboard.writeText(t).then(function(){ document.getElementById('status').textContent='Status: schema copied. Paste it into your product page, or use it to check what an agent would read.'; });
 }
 var importedProducts = [];
 function updateCounts(){
@@ -233,9 +290,19 @@ function updateCounts(){
   var q = document.getElementById('queueNote');
   if(q) q.textContent = total > 25 ? 'Bulk note: ' + total + ' products imported, but the $29 base plan generates 25 per month. The rest would wait in queue, starting with French-missing items.' : '';
 }
+var currentProdEl = null;
 function setActiveProd(el){
   document.querySelectorAll('#productList .prod').forEach(function(p){p.classList.remove('active');});
   if(el) el.classList.add('active');
+  currentProdEl = el || null;
+}
+function setCurrentBadge(text, cls){
+  if(!currentProdEl) return;
+  var pill = currentProdEl.querySelector('.pill');
+  if(!pill) return;
+  pill.textContent = text;
+  pill.className = 'pill' + (cls ? ' ' + cls : '');
+  updateCounts();
 }
 function selectImported(i, el){
   var p = importedProducts[i];
@@ -246,7 +313,22 @@ function selectImported(i, el){
   document.getElementById('price').value = p.price;
   document.getElementById('material').value = p.material;
   document.getElementById('size').value = p.size;
+  document.getElementById('schBrand').value = p.brand || '';
+  document.getElementById('schSku').value = p.sku || '';
+  document.getElementById('schBarcode').value = p.barcode || '';
+  document.getElementById('schType').value = p.type || '';
+  document.getElementById('schCategory').value = p.category || '';
+  document.getElementById('schVariant').value = p.variant || '';
+  document.getElementById('schCompare').value = p.compare || '';
+  document.getElementById('schWeight').value = p.weight || '';
+  document.getElementById('schInventory').value = p.inventory || '';
+  document.getElementById('schTags').value = p.tags || '';
+  document.getElementById('schImage').value = p.image || '';
+  document.getElementById('schSeoTitle').value = p.seoTitle || '';
+  document.getElementById('schSeoDesc').value = p.seoDesc || '';
+  document.getElementById('schAvail').value = p.availability || 'InStock';
   generate();
+  /* Do not copy the CSV image alt text into the French alt field: the CSV alt is English. Generate sets a French alt text instead. */
 }
 function parseCSV(text){
   var rows=[], row=[], cur='', inQ=false;
@@ -287,7 +369,9 @@ function importCSVText(text){
     seen.add(title.toLowerCase());
     var priceRaw = pick(row, headers, ['variant price','price','prix']);
     var price = priceRaw.replace(/[^0-9.,-]/g,'').replace(',', '.');
-    var p = {title:title, description:stripHtml(pick(row, headers, ['body (html)','body html','description','body','description anglaise'])), price:price, material:pick(row, headers, ['material','materials','matière','matiere']), size:pick(row, headers, ['size','format'])};
+    var compareRaw = pick(row, headers, ['variant compare at price','compare at price','compare-at price']);
+    var invRaw = pick(row, headers, ['variant inventory qty','inventory qty','inventory quantity']);
+    var p = {title:title, description:stripHtml(pick(row, headers, ['body (html)','body html','description','body','description anglaise'])), price:price, material:pick(row, headers, ['material','materials','matière','matiere']), size:pick(row, headers, ['size','format']), brand:pick(row, headers, ['vendor','brand','marque']), sku:pick(row, headers, ['variant sku','sku']), barcode:pick(row, headers, ['variant barcode','barcode','gtin']), type:pick(row, headers, ['type','product type']), category:pick(row, headers, ['product category','category','catégorie']), variant:[pick(row, headers, ['option1 value','variant option1','option 1']),pick(row, headers, ['option2 value','option 2']),pick(row, headers, ['option3 value','option 3'])].filter(Boolean).join(' / '), compare:compareRaw.replace(/[^0-9.,-]/g,'').replace(',', '.'), weight:pick(row, headers, ['variant grams','grams','weight']), inventory:invRaw, tags:pick(row, headers, ['tags','étiquettes']), image:pick(row, headers, ['image src','image','image url']), imageAlt:pick(row, headers, ['image alt text','alt text']), seoTitle:pick(row, headers, ['seo title','meta title']), seoDesc:pick(row, headers, ['seo description','meta description']), availability:(parseFloat(invRaw)>0?'InStock':(invRaw===''?'InStock':'OutOfStock'))};
     importedProducts.push(p);
     var idx = importedProducts.length-1;
     var div = document.createElement('div');
@@ -297,7 +381,9 @@ function importCSVText(text){
     document.getElementById('productList').appendChild(div);
     added++;
   }
-  document.getElementById('importStatus').textContent = 'Imported ' + added + ' product' + (added===1?'':'s') + (skipped ? ', skipped ' + skipped + ' (no title, duplicate, or Shopify variant row).' : '.') + ' Click an imported product to load it and generate its French draft.';
+  var emptyEl = document.getElementById('emptyState');
+  if(emptyEl && added) emptyEl.style.display='none';
+  document.getElementById('importStatus').textContent = 'Imported ' + added + ' product' + (added===1?'':'s') + (skipped ? ', skipped ' + skipped + ' (no title, duplicate, or Shopify variant row).' : '.') + ' Click an imported product to load it and generate its French draft. Brand, SKU, barcode, type, tags, SEO, and image data from the CSV are now editable in Step 3.';
   updateCounts();
   if(added && importedProducts.length) selectImported(importedProducts.length-1, document.querySelectorAll('#productList .prod')[document.querySelectorAll('#productList .prod').length-1]);
 }
@@ -308,12 +394,8 @@ function importCSVFile(event){
   reader.onload = function(e){ importCSVText(e.target.result); };
   reader.readAsText(f);
 }
-function loadSampleCSV(){
-  var sample = 'Title,Description,Price,Material,Size\n"Custom Baby Onesie","Soft baby onesie with embroidered name",38.00,"100% cotton","6 months"\n"Embroidered Hooded Towel","Hooded towel with embroidered animal applique",52.00,"100% cotton","30 x 30 in"\n"Personalized Christmas Stocking","Christmas stocking with embroidered name",34.00,"100% cotton","18 in"';
-  importCSVText(sample);
-}
 function downloadTemplate(){
-  var csv = 'Title,Description,Price,Material,Size\n"Example Product","Example description in English",29.00,"100% cotton","10 x 10 in"\n';
+  var csv = 'Title,Description,Price,Variant Compare At Price,Material,Size,Vendor,Variant SKU,Variant Barcode,Type,Product Category,Tags,Variant Grams,Variant Inventory Qty,Image Src,Image Alt Text,SEO Title,SEO Description\n"Your product name","Your English description",29.00,39.00,"100% cotton","10 x 10 in","Your brand","SKU-001","123456789012","Baby gift","Baby","baby,gift",200,10,"https://example.com/image.jpg","Your product image","Your SEO title","Your SEO description"\n';
   var blob = new Blob([csv], {type:'text/csv'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -329,6 +411,7 @@ function copyFrench(){
 }
 function approve(){
   document.getElementById('status').textContent = 'Status: approved — ready to publish. In the real tool this would update the French version in Shopify.';
+  setCurrentBadge('French published', 'done');
 }
 </script>
 </body>
