@@ -73,6 +73,11 @@
         <div class="row">
           <button class="importbtn" onclick="downloadTemplate()">Download CSV template</button>
         </div>
+        <p class="small" style="margin-top:14px"><strong>If the file picker does nothing on your phone,</strong> paste the CSV text here instead:</p>
+        <textarea id="pasteCsv" rows="4" placeholder="Paste CSV text here, header row first, then click Import pasted CSV"></textarea>
+        <div class="row">
+          <button class="importbtn" onclick="importPasted()">Import pasted CSV</button>
+        </div>
         <p id="importStatus" class="small">No products imported yet. Accepted columns include: Title, Body (HTML), Vendor, Type, Product Category, Tags, Variant SKU, Variant Barcode, Variant Price, Variant Compare At Price, Variant Grams, Variant Inventory Qty, Image Src, Image Alt Text, SEO Title, SEO Description, plus Material and Size. Rows without a title are skipped, and duplicate titles are skipped.</p>
       </div>
       <div class="eyebrow">Your products</div>
@@ -330,8 +335,9 @@ function selectImported(i, el){
   generate();
   /* Do not copy the CSV image alt text into the French alt field: the CSV alt is English. Generate sets a French alt text instead. */
 }
-function parseCSV(text){
+function parseCSV(text, delim){
   var rows=[], row=[], cur='', inQ=false;
+  delim = delim || ',';
   text = String(text||'').replace(/^\uFEFF/, '');
   for(var i=0;i<text.length;i++){
     var c=text[i];
@@ -339,7 +345,7 @@ function parseCSV(text){
       if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else {inQ=false;} }
       else cur+=c;
     } else if(c==='"'){ inQ=true; }
-    else if(c===','){ row.push(cur); cur=''; }
+    else if(c===delim){ row.push(cur); cur=''; }
     else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; }
     else if(c==='\r'){ /* skip, newline handles it */ }
     else cur+=c;
@@ -354,8 +360,17 @@ function pick(row, headers, names){
   }
   return '';
 }
+function detectDelim(text){
+  var firstLine = String(text||'').split(/\r?\n/)[0] || '';
+  var commas = (firstLine.match(/,/g)||[]).length;
+  var semis = (firstLine.match(/;/g)||[]).length;
+  var tabs = (firstLine.match(/\t/g)||[]).length;
+  if(semis > commas && semis > tabs) return ';';
+  if(tabs > commas) return '\t';
+  return ',';
+}
 function importCSVText(text){
-  var rows = parseCSV(text);
+  var rows = parseCSV(text, detectDelim(text));
   if(rows.length < 2){ document.getElementById('importStatus').textContent = 'That file has no data rows. It needs a header row plus at least one product.'; return; }
   var headers = rows[0].map(function(h){return String(h||'').trim().toLowerCase();});
   var seen = new Set();
@@ -383,16 +398,42 @@ function importCSVText(text){
   }
   var emptyEl = document.getElementById('emptyState');
   if(emptyEl && added) emptyEl.style.display='none';
-  document.getElementById('importStatus').textContent = 'Imported ' + added + ' product' + (added===1?'':'s') + (skipped ? ', skipped ' + skipped + ' (no title, duplicate, or Shopify variant row).' : '.') + ' Click an imported product to load it and generate its French draft. Brand, SKU, barcode, type, tags, SEO, and image data from the CSV are now editable in Step 3.';
+  document.getElementById('importStatus').textContent = added
+    ? ('Imported ' + added + ' product' + (added===1?'':'s') + (skipped ? ', skipped ' + skipped + ' (no title, duplicate, or Shopify variant row).' : '.') + ' Click an imported product to load it and generate its French draft. Brand, SKU, barcode, type, tags, SEO, and image data from the CSV are now editable in Step 3.')
+    : ('Imported 0 products. Skipped ' + skipped + ' rows (no title, duplicate, or Shopify variant row). Check that the first row is a header row with a Title column, and that product rows actually have a title. The template download shows the expected format.');
   updateCounts();
   if(added && importedProducts.length) selectImported(importedProducts.length-1, document.querySelectorAll('#productList .prod')[document.querySelectorAll('#productList .prod').length-1]);
 }
 function importCSVFile(event){
-  var f = event.target.files && event.target.files[0];
+  var input = event.target;
+  var f = input.files && input.files[0];
   if(!f) return;
+  var statusEl = document.getElementById('importStatus');
+  if(/\.xlsx?$|\.numbers$/i.test(f.name)){
+    statusEl.textContent = 'That looks like an Excel file (' + f.name + '), not a CSV. In Excel or Sheets, save/download it as CSV first, then upload that CSV file here.';
+    input.value = '';
+    return;
+  }
+  statusEl.textContent = 'Picked ' + f.name + ' (' + f.size + ' bytes) — reading file… If this message stays, the file could not be read on this device; try the paste box below instead.';
   var reader = new FileReader();
-  reader.onload = function(e){ importCSVText(e.target.result); };
+  reader.onerror = function(){
+    statusEl.textContent = 'Could not read ' + f.name + ' on this device. Try downloading the file again, then pick it again — or paste its text in the box below.';
+    input.value = '';
+  };
+  reader.onload = function(e){
+    try { importCSVText(e.target.result); }
+    catch(err){ statusEl.textContent = 'Import stopped with an error: ' + (err && err.message ? err.message : err) + '. Try the template file to check the format, or paste the CSV text below.'; }
+    input.value = '';
+  };
   reader.readAsText(f);
+}
+function importPasted(){
+  var text = document.getElementById('pasteCsv').value;
+  var statusEl = document.getElementById('importStatus');
+  if(!text.trim()){ statusEl.textContent = 'Paste box is empty. Paste CSV text (header row first) into the box above, then click Import pasted CSV.'; return; }
+  statusEl.textContent = 'Reading pasted text…';
+  try { importCSVText(text); }
+  catch(err){ statusEl.textContent = 'Import stopped with an error: ' + (err && err.message ? err.message : err) + '.'; }
 }
 function downloadTemplate(){
   var csv = 'Title,Description,Price,Variant Compare At Price,Material,Size,Vendor,Variant SKU,Variant Barcode,Type,Product Category,Tags,Variant Grams,Variant Inventory Qty,Image Src,Image Alt Text,SEO Title,SEO Description\n"Your product name","Your English description",29.00,39.00,"100% cotton","10 x 10 in","Your brand","SKU-001","123456789012","Baby gift","Baby","baby,gift",200,10,"https://example.com/image.jpg","Your product image","Your SEO title","Your SEO description"\n';
