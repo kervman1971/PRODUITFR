@@ -102,7 +102,7 @@
         <label for="enDesc">English description</label>
         <textarea id="enDesc" placeholder="Import a product, or type the English description here"></textarea>
         <div class="fields">
-          <div><label for="price">Price (CAD)</label><input id="price" placeholder="0.00"></div>
+          <div><label for="price">Price (CAD)</label><input id="price" placeholder="0.00" oninput="updateSchemaPreview()"></div>
           <div><label for="material">Material</label><input id="material" placeholder="e.g. 100% cotton"></div>
           <div><label for="size">Size</label><input id="size" placeholder="e.g. 30 x 56 in"></div>
         </div>
@@ -191,6 +191,16 @@
           <button class="primary" onclick="copySchema()">Copy schema (JSON-LD)</button>
         </div>
         <p class="small">In the real tool, this schema would be written back to Shopify with the French version, so the French page and its structured data match.</p>
+        <h3>Google Rich Results check — fix it here first</h3>
+        <p class="small">This mimics what Google checks for a Product rich result. Fix any ✕ item in the fields above and this list updates live. It is a guide, not Google's official verdict — use the button below for that.</p>
+        <ul class="check" id="googleCheckList">
+          <li>Import a product to check its Google readiness here.</li>
+        </ul>
+        <p id="googleCheckSummary" class="small"></p>
+        <div class="row">
+          <button class="ghost" onclick="window.open('https://search.google.com/test/rich-results', '_blank')">Open Google Rich Results Test</button>
+        </div>
+        <p class="small">For Google's official verdict: click Copy schema above, open the test, choose Code, paste the schema, and run the test. If Google flags something, fix that field above, copy the schema again, and retest. Reviews and ratings are left out on purpose — they are not in a normal Shopify export, and Google rejects invented ratings.</p>
       </div>
 
       <div class="card" style="margin-top:14px">
@@ -214,6 +224,8 @@ function clearFields(){
   document.getElementById('enOut').textContent='Import a product to see its English version here.';
   document.getElementById('enPrice').textContent='';
   document.getElementById('schemaPreview').textContent='Import a product to see its product schema here.';
+  document.getElementById('googleCheckList').innerHTML='<li>Import a product to check its Google readiness here.</li>';
+  document.getElementById('googleCheckSummary').textContent='';
   document.getElementById('status').textContent='Status: fields cleared. Import a CSV file to begin.';
 }
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -262,7 +274,7 @@ function generate(){
 }
 function updateSchemaPreview(){
   var name = document.getElementById('frTitle').value || document.getElementById('enTitle').value;
-  if(!name){ document.getElementById('schemaPreview').textContent='Import a product to see its product schema here.'; return; }
+  if(!name){ document.getElementById('schemaPreview').textContent='Import a product to see its product schema here.'; updateGoogleCheck(); return; }
   var priceRaw = parseFloat(String(document.getElementById('price').value).replace(',', '.'));
   var schema = {"@context":"https://schema.org","@type":"Product","name":name,"description":document.getElementById('frDesc').value || document.getElementById('enDesc').value,"brand":{"@type":"Brand","name":document.getElementById('schBrand').value},"sku":document.getElementById('schSku').value,"gtin":document.getElementById('schBarcode').value,"category":document.getElementById('schCategory').value,"additionalProperty":[{"@type":"PropertyValue","name":"Product type","value":document.getElementById('schType').value},{"@type":"PropertyValue","name":"Variant","value":document.getElementById('schVariant').value},{"@type":"PropertyValue","name":"Material","value":document.getElementById('material').value},{"@type":"PropertyValue","name":"Size","value":document.getElementById('size').value}],"offers":{"@type":"Offer","price":isNaN(priceRaw)?'':priceRaw.toFixed(2),"priceCurrency":"CAD","availability":"https://schema.org/"+document.getElementById('schAvail').value}};
   var img = document.getElementById('schImage').value;
@@ -277,6 +289,40 @@ function updateSchemaPreview(){
   schema.additionalProperty = schema.additionalProperty.filter(function(p){return p.value;});
   if(!schema.additionalProperty.length) delete schema.additionalProperty;
   document.getElementById('schemaPreview').textContent = JSON.stringify(schema, null, 2);
+  updateGoogleCheck();
+}
+function updateGoogleCheck(){
+  var list = document.getElementById('googleCheckList');
+  var summary = document.getElementById('googleCheckSummary');
+  if(!list) return;
+  var name = document.getElementById('frTitle').value || document.getElementById('enTitle').value;
+  var desc = document.getElementById('frDesc').value || document.getElementById('enDesc').value;
+  var priceRaw = parseFloat(String(document.getElementById('price').value).replace(',', '.'));
+  var img = document.getElementById('schImage').value;
+  var brand = document.getElementById('schBrand').value;
+  var sku = document.getElementById('schSku').value;
+  var gtin = document.getElementById('schBarcode').value;
+  var items = [];
+  var errors = 0;
+  function req(ok, text){
+    if(ok){ items.push('<li>✓ ' + text + '</li>'); }
+    else { items.push('<li>✕ ' + text + ' — Google will flag this for a Product rich result</li>'); errors++; }
+  }
+  function rec(ok, text){
+    items.push('<li>' + (ok ? '✓ ' : '○ ') + text + (ok ? '' : ' — recommended, not required') + '</li>');
+  }
+  req(!!name.trim(), 'Product name present');
+  req(!!img.trim(), 'Product image present');
+  req(!isNaN(priceRaw) && priceRaw > 0, 'Price present, in CAD');
+  req(true, 'Price currency: CAD');
+  req(true, 'Availability present (In stock / Out of stock / Pre-order)');
+  rec(!!desc.trim(), 'Product description present');
+  rec(!!brand.trim(), 'Brand present');
+  rec(!!(sku.trim() || gtin.trim()), 'Product identifier present (SKU or barcode/GTIN)');
+  list.innerHTML = items.join('');
+  if(summary) summary.textContent = errors
+    ? 'Fix the ✕ items above first, then retest in Google.'
+    : (name ? 'All required Product fields are present — ready to test in Google.' : 'Import a product to check its Google readiness here.');
 }
 function copySchema(){
   var t = document.getElementById('schemaPreview').textContent;
