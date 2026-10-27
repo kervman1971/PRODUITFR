@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ProduitFR — Preview: French descriptions for Quebec Shopify stores</title>
+<title>Prêt-à-Publier — Preview: French descriptions for Quebec Shopify stores</title>
 <style>
   :root{--ink:#20241f;--muted:#5a625a;--line:#e3ddd0;--bg:#faf7f0;--card:#ffffff;--green:#17614a;--green2:#e6f0ea;--amber:#fff3d6;--blue:#eaf0f7;--red:#fde8e8;--gold:#8a5a00}
   *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;font-size:16px}
@@ -38,7 +38,8 @@
 <body>
 <header>
   <div class="inner">
-    <h1>ProduitFR</h1>
+    <h1>Prêt-à-Publier</h1>
+    <p style="font-size:19px;color:#eaf5ee;font-family:Georgia,'Times New Roman',serif;margin:6px 0 0">Prêt quand vous l’êtes.</p>
     <p>French descriptions for your Quebec shop, in Quebec French. Import your products, check the French draft and the product data agents read, then approve. Nothing publishes until you say so.</p>
     <p style="font-size:15px;color:#cfe5d8">Preview only &middot; Des descriptions françaises pour votre boutique au Québec</p>
   </div>
@@ -484,7 +485,7 @@ function downloadTemplate(){
   var blob = new Blob([csv], {type:'text/csv'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'produitfr-template.csv';
+  a.download = 'pret-a-publier-template.csv';
   a.click();
   URL.revokeObjectURL(a.href);
 }
